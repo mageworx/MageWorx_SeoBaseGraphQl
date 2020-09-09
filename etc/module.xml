@@ -9,8 +9,10 @@
     <module name="MageWorx_SeoBaseGraphQl">
         <sequence>
             <module name="MageWorx_SeoBase"/>
-            <module name="Mage_Catalog"/>
-            <module name="Mage_CatalogGraphQl"/>
+            <module name="Magento_Catalog"/>
+            <module name="Magento_CatalogGraphQl"/>
+            <module name="Magento_Cms"/>
+            <module name="Magento_CmsGraphQl"/>
         </sequence>
     </module>
 </config>

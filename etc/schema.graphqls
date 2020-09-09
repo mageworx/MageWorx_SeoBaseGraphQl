@@ -1,11 +1,25 @@
 interface ProductInterface {
     meta_robots: String @doc(description: "Meta Robots")
+    mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Product\\Hreflangs")
 }
 
 interface CategoryInterface {
     meta_robots: String @doc(description: "Meta Robots")
-}
+    canonical_url: String @doc(description: "Canonical URL") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Category\\CanonicalUrl")
+    mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Category\\Hreflangs")
+ }
 
 type CmsPage {
     meta_robots: String @doc(description: "Meta Robots")
+    canonical_url: String @doc(description: "Canonical URL") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\CmsPage\\CanonicalUrl")
+    mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\CmsPage\\Hreflangs")
+}
+
+type MwHreflangs @doc(description: "Hreflangs information") {
+    items: [MwHreflang] @doc(description: "An array of Hreflangs")
+}
+
+type MwHreflang @doc(description: "Hreflang defines all Hreflang information") {
+    url: String @doc(description: "Hreflang URL")
+    code: String @doc(description: "Hreflang Code")
 }
