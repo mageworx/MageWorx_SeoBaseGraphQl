@@ -7,7 +7,7 @@ GraphQL API module for Mageworx [Magento 2 SEO Suite Ultimate](https://www.magew
 - Download this module and upload it to the `app/code/MageWorx/SeoBaseGraphQl` directory *(create "SeoBaseGraphQl" first if missing)*
 
 **2) Installation using composer (from packagist)**
-- Execute the following command: `composer require MageWorx_SeoBaseGraphQl`
+- Execute the following command: `composer require mageworx/module-seobase-graph-ql`
 
 ## How to use
 **[SeoBaseGraphQL](https://github.com/mageworx/MageWorx_SeoBaseGraphQl)** module extends existing Output attributes for Product, Category, CmsPage queries and includes:
