@@ -1,17 +1,20 @@
 interface ProductInterface {
+    cross_domain_url: String @doc(description: "Cross Domain Url")
+    cross_domain_store: String @doc(description: "Cross Domain Store")
     meta_robots: String @doc(description: "Meta Robots")
+    mw_canonical_url: MwCanonical @doc(description: "Canonical URL Data") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Product\\CanonicalUrl")
     mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Product\\Hreflangs")
 }
 
 interface CategoryInterface {
     meta_robots: String @doc(description: "Meta Robots")
-    canonical_url: String @doc(description: "Canonical URL") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Category\\CanonicalUrl")
+    mw_canonical_url: MwCanonical @doc(description: "Canonical URL Data") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Category\\CanonicalUrl")
     mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Category\\Hreflangs")
  }
 
 type CmsPage {
     meta_robots: String @doc(description: "Meta Robots")
-    canonical_url: String @doc(description: "Canonical URL") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\CmsPage\\CanonicalUrl")
+    mw_canonical_url: MwCanonical @doc(description: "Canonical URL Data") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\CmsPage\\CanonicalUrl")
     mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\CmsPage\\Hreflangs")
 }
 
@@ -22,4 +25,9 @@ type MwHreflangs @doc(description: "Hreflangs information") {
 type MwHreflang @doc(description: "Hreflang defines all Hreflang information") {
     url: String @doc(description: "Hreflang URL")
     code: String @doc(description: "Hreflang Code")
+}
+
+type MwCanonical @doc(description: "Canonical URL information") {
+    url: String @doc(description: "Canonical URL")
+    code: String @doc(description: "Store Code")
 }
