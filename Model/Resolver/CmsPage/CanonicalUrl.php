@@ -30,22 +30,28 @@ class CanonicalUrl implements ResolverInterface
     protected $pageRepository;
 
     /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
      * @var string
      */
     protected $fullActionName = 'cms_page_view';
 
     /**
-     * CanonicalUrl constructor.
-     *
      * @param \MageWorx\SeoBase\Model\CanonicalFactory $canonicalFactory
      * @param PageRepositoryInterface $pageRepository
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      */
     public function __construct(
         \MageWorx\SeoBase\Model\CanonicalFactory $canonicalFactory,
-        PageRepositoryInterface $pageRepository
+        PageRepositoryInterface $pageRepository,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->canonicalFactory = $canonicalFactory;
         $this->pageRepository   = $pageRepository;
+        $this->storeManager     = $storeManager;
     }
 
     /**
@@ -71,12 +77,14 @@ class CanonicalUrl implements ResolverInterface
         $canonicalModel = $this->canonicalFactory->create($this->fullActionName, $arguments);
         $canonicalModel->setEntity($cmsPage);
 
-        $canonicalUrl = $canonicalModel->getCanonicalUrl();
+        $canonicalUrl     = $canonicalModel->getCanonicalUrl();
+        $canonicalStoreId = $canonicalModel->getCanonicalStoreId($cmsPage->getId());
 
-        if ($canonicalUrl) {
-            return $canonicalUrl;
-        }
+        $result = [
+            'url'  => $canonicalUrl ?: null,
+            'code' => $canonicalStoreId ? $this->storeManager->getStore($canonicalStoreId)->getCode() : null
+        ];
 
-        return null;
+        return $result;
     }
 }
