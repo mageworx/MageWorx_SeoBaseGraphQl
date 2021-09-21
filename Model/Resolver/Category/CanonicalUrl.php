@@ -23,6 +23,10 @@ class CanonicalUrl implements ResolverInterface
     protected $canonicalFactory;
 
     /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+    /**
      * @var string
      */
     protected $fullActionName = 'catalog_category_view';
@@ -33,9 +37,11 @@ class CanonicalUrl implements ResolverInterface
      * @param \MageWorx\SeoBase\Model\CanonicalFactory $canonicalFactory
      */
     public function __construct(
-        \MageWorx\SeoBase\Model\CanonicalFactory $canonicalFactory
+        \MageWorx\SeoBase\Model\CanonicalFactory $canonicalFactory,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->canonicalFactory = $canonicalFactory;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -44,7 +50,7 @@ class CanonicalUrl implements ResolverInterface
      * @param ResolveInfo $info
      * @param array|null $value
      * @param array|null $args
-     * @return Value|mixed
+     * @return array|null
      * @throws LocalizedException
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
@@ -60,12 +66,14 @@ class CanonicalUrl implements ResolverInterface
         $canonicalModel = $this->canonicalFactory->create($this->fullActionName, $arguments);
         $canonicalModel->setEntity($category);
 
-        $canonicalUrl = $canonicalModel->getCanonicalUrl();
+        $canonicalUrl     = $canonicalModel->getCanonicalUrl();
+        $canonicalStoreId = $canonicalModel->getCanonicalStoreId($category->getId());
 
-        if ($canonicalUrl) {
-            return $canonicalUrl;
-        }
+        $result = [
+            'url' => $canonicalUrl ?: null,
+            'code' => $canonicalStoreId ? $this->storeManager->getStore($canonicalStoreId)->getCode() : null
+        ];
 
-        return null;
+        return $result;
     }
 }
