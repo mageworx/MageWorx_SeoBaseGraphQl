@@ -1,12 +1,14 @@
 interface ProductInterface {
     cross_domain_url: String @doc(description: "Cross Domain Url")
     cross_domain_store: String @doc(description: "Cross Domain Store")
+    product_seo_name: String @doc(description: "SEO Name")
     meta_robots: String @doc(description: "Meta Robots")
     mw_canonical_url: MwCanonical @doc(description: "Canonical URL Data") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Product\\CanonicalUrl")
     mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Product\\Hreflangs")
 }
 
 interface CategoryInterface {
+    category_seo_name: String @doc(description: "SEO Name")
     meta_robots: String @doc(description: "Meta Robots")
     mw_canonical_url: MwCanonical @doc(description: "Canonical URL Data") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Category\\CanonicalUrl")
     mw_hreflangs: MwHreflangs @doc(description: "Hreflangs") @resolver(class: "MageWorx\\SeoBaseGraphQl\\Model\\Resolver\\Category\\Hreflangs")
